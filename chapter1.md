@@ -66,12 +66,12 @@ $$f_X(x)=\\frac{x}{4}e^{-x^2/8},\\quad x\\geq 0.$$
 
 `@instructions`
 + Define the PDF from above as a function <tt>f()</tt>. <tt>exp(a)</tt> computes $e^a$.
-  + Check whether the function you have defined is indeed a PDF.
++ Check whether the function you have defined is indeed a PDF.
 
 `@hint`
 + Use <tt>function(x) {...}</tt> to define a function which takes the argument <tt>x</tt>.
-+ In order for <tt>f()</tt> to be a PDF, its integral over the whole domain has to equal 1: $\\int_0^\\infty f_X(x)\\mathrm{d}x=1$.
-+ The function <tt>integrate()</tt> performs integration. You have to specify the function to be integrated as well as lower and upper limits of integration. These may be set to $[-\\infty,\\infty]$ by setting the corresponding arguments to <tt>-Inf</tt> and <tt>Inf</tt>. You can access the numerical value of the computed integral by appending <tt>$value</tt>. See <tt>?integral</tt> for a detailed description of the function.
++ In order for <tt>f()</tt> to be a PDF, its integral over the whole domain has to equal 1: $\\int_0^\\infty f\_X(x)\\mathrm{d}x=1$.
++ The function <tt>integrate()</tt> performs integration. You have to specify the function to be integrated as well as lower and upper limits of integration. These may be set to $[0,\\infty]$ by setting the corresponding arguments to <tt>0</tt> and <tt>Inf</tt>. You can access the numerical value of the computed integral by appending <tt>$value</tt>. See <tt>?integral</tt> for a detailed description of the function.
 
 `@pre_exercise_code`
 ```{r}
@@ -80,15 +80,38 @@ $$f_X(x)=\\frac{x}{4}e^{-x^2/8},\\quad x\\geq 0.$$
 
 `@sample_code`
 ```{r}
+# define the PDF
+
+   
+# integrate f over the domain
+
 
 ```
 
 `@solution`
 ```{r}
+# define the PDF
+f <- function(x){x/4*exp(-x^2/8)}
+   
+# integrate f over the domain
+integrate(f, 0, Inf)$value
 
 ```
 
 `@sct`
 ```{r}
-
+ex() %>% check_fun_def("f") %>% {
+  check_arguments(.)
+  check_call(., 1) %>% check_result() %>% check_equal()
+  check_call(., 4) %>% check_result() %>% check_equal()
+  check_call(., 10) %>% check_result() %>% check_equal()
+  check_call(., 100) %>% check_result() %>% check_equal()
+  check_body(.) %>% check_function(., "exp")
+}
+ex() %>% check_or(
+  check_function(., 'integrate') %>% check_result() %>% check_equal(),
+  override_solution(., 'integrate(f, 0, Inf)') %>%
+    check_function('integrate') %>% check_result() %>% check_equal()
+)
+success_msg("Great work!")
 ```
