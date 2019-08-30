@@ -108,10 +108,106 @@ ex() %>% check_fun_def("f") %>% {
   check_call(., 100) %>% check_result() %>% check_equal()
   check_body(.) %>% check_function(., "exp")
 }
-ex() %>% check_or(
-  check_function(., 'integrate') %>% check_result() %>% check_equal(),
-  override_solution(., 'integrate(f, 0, Inf)') %>%
-    check_function('integrate') %>% check_result() %>% check_equal()
-)
+ex() %>% check_function("integrate") %>% {
+  check_arg(., "f") %>% check_equal(eval = FALSE)
+  check_arg(., "lower") %>% check_equal()
+  check_arg(., "upper") %>% check_equal()
+}
+ex() %>% check_function('integrate') %>% check_result() %>% check_equal()
 success_msg("Great work!")
+```
+
+---
+
+## Expected Value and Variance 
+
+```yaml
+type: NormalExercise
+key: 457fe23524
+xp: 100
+```
+
+In this exercise you have to compute the expected value and the variance of the random variable $X$ considered in the previous exercise.
+
+The PDF <tt>f()</tt> from the previous exercise is available in your working environment.
+
+`@instructions`
++ Define a suitable function <tt>ex()</tt> which integrates to the expected value of $X$.
+  + Compute the expected value of $X$. Store the result in <tt>expected_value</tt>.
+  + Define a suitable function <tt>ex2()</tt> which integrates to the expected value of $X^2$.
+  + Compute the variance of $X$. Store the result in <tt>variance</tt>.
+
+`@hint`
++ The expected value of $X$ is defined as $E(X)=\\int_0^\\infty xf\_X(x)\\mathrm{d}x$.
+  + The value of an integral computed by <tt>integrate()</tt> can be obtained via <tt>$value</tt>.
+  + The variance of $X$ is defined as $Var(X)=E(X^2)-E(X)^2$, where $E(X^2)=\\int_0^\\infty x^2f\_X(x)\\mathrm{d}x$.
+
+`@pre_exercise_code`
+```{r}
+f <- function(x){(x/4)*exp(-x^2/8)}
+```
+
+`@sample_code`
+```{r}
+# define the function ex
+
+
+# compute the expected value of X
+
+
+# define the function ex2
+
+
+# compute the variance of X
+
+
+```
+
+`@solution`
+```{r}
+# define the function ex
+ex <- function(x){x*f(x)}
+
+# compute the expected value of X
+expected_value <- integrate(ex, 0, Inf)$value
+
+# define the function ex2
+ex2 <- function(x){x^2*f(x)}
+
+# compute the variance of X
+variance <- integrate(ex2, 0, Inf)$value - expected_value^2
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_fun_def("ex") %>% {
+  check_arguments(.)
+  check_call(., 1) %>% check_result() %>% check_equal()
+  check_call(., 4) %>% check_result() %>% check_equal()
+  check_call(., 10) %>% check_result() %>% check_equal()
+  check_call(., 100) %>% check_result() %>% check_equal()
+  check_body(.) %>% check_function(., "f")
+}
+ex() %>% check_function("integrate", index = 1) %>% {
+  check_arg(., "f") %>% check_equal(eval = FALSE)
+  check_arg(., "lower") %>% check_equal()
+  check_arg(., "upper") %>% check_equal()
+}
+ex() %>% check_object("expected_value") %>% check_equal()
+ex() %>% check_fun_def("ex2") %>% {
+  check_arguments(.)
+  check_call(., 1) %>% check_result() %>% check_equal()
+  check_call(., 4) %>% check_result() %>% check_equal()
+  check_call(., 10) %>% check_result() %>% check_equal()
+  check_call(., 100) %>% check_result() %>% check_equal()
+  check_body(.) %>% check_function(., "f")
+}
+ex() %>% check_function("integrate", index = 2) %>% {
+  check_arg(., "f") %>% check_equal(eval = FALSE)
+  check_arg(., "lower") %>% check_equal()
+  check_arg(., "upper") %>% check_equal()
+}
+ex() %>% check_object("variance") %>% check_equal()
+success_msg("Good job!")
 ```
