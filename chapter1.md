@@ -302,3 +302,145 @@ ex() %>% check_or(
 ex() %>% check_output_expr("1 - 2*pnorm(-1.64)")
 success_msg("Good Job!")
 ```
+
+---
+
+## Normal Distribution I
+
+```yaml
+type: NormalExercise
+key: fc7b7c446b
+xp: 100
+```
+
+Let $Y\\sim\\mathcal{N}(5, 25)$.
+
+`@instructions`
++ Compute the 99% quantile of the given distribution, i.e., find $y$ such that $\\Phi\\left(\\frac{y-5}{5}\\right)=0.99$.
+
+`@hint`
++ You can compute quantiles of the normal distribution by using the function <tt>qnorm()</tt>.
++ Besides the quantile to be computed you have to specify the mean and the standard deviation of the distribution. This is done via the arguments <tt>mean</tt> and <tt>sd</tt>. Note that <tt>sd</tt> sets the standard deviation, not the variance!
++ <tt>sqrt(a)</tt> returns the square root of the numeric argument <tt>a</tt>.
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# compute the 99% quantile of a normal distribution with mu = 5 and sigma^2 = 25.
+
+
+```
+
+`@solution`
+```{r}
+# compute the 99% quantile of a normal distribution with mu = 5 and sigma^2 = 25.
+qnorm(0.99, mean = 5, sd = sqrt(25))
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_function("qnorm") %>% check_result() %>% check_equal()
+success_msg("Great work!")
+```
+
+---
+
+## Normal Distribution II
+
+```yaml
+type: NormalExercise
+key: e13d86de1c
+xp: 100
+```
+
+Let $Y\\sim\\mathcal{N}(2, 12)$.
+
+`@instructions`
++ Generate $10$ random numbers from this distribution.
+
+`@hint`
++ You can use <tt>rnorm()</tt> to draw random numbers from a normal distribution.
++ Besides the number of draws you have to specify the mean and the standard deviation of the distribution. This can be done via the arguments <tt>mean</tt> and <tt>sd</tt>. Note that <tt>sd</tt> requires the standard deviation, not the variance!
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# generate 10 random numbers from the given distribution.
+
+
+```
+
+`@solution`
+```{r}
+# generate 10 random numbers from the given distribution.
+rnorm(10, mean = 2, sd = sqrt(12))
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_function("rnorm") %>% {
+  check_arg(., "n") %>% check_equal()
+  check_arg(., "mean") %>% check_equal()
+  check_arg(., "sd") %>% check_equal()
+}
+success_msg("Great work!")
+```
+
+---
+
+## Chi-squared Distribution I
+
+```yaml
+type: NormalExercise
+key: 7c6da7fa91
+xp: 100
+```
+
+Let $W\\sim\\chi^2\_{10}$.
+
+`@instructions`
++ Plot the corresponding PDF using <tt>curve()</tt>. Specify the range of x-values as $[0,25]$ via the argument <tt>xlim</tt>.
+
+`@hint`
++ <tt>curve()</tt> expects a function and its parameters as arguments (here <tt>dchisq()</tt> and the degrees of freedom <tt>df</tt>).
++ The range of x-values in <tt>xlim</tt> can be passed as a vector of interval bounds.
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# plot the PDF of a chi^2 random variable with df = 10
+
+
+```
+
+`@solution`
+```{r}
+# plot the PDF of a chi^2 random variable with df = 10
+curve(dchisq(x, df = 10), xlim = c(0, 25))
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_function("curve") %>% {
+  check_arg(., "expr") # does not work
+  check_arg(., "xlim") %>% check_equal()
+}
+# more robust SCT needed
+ex() %>% check_code("dchisq", fixed = T)
+success_msg("Great work!")
+```
