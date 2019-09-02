@@ -119,7 +119,7 @@ success_msg("Great work!")
 
 ---
 
-## Expected Value and Variance 
+## Expected Value and Variance
 
 ```yaml
 type: NormalExercise
