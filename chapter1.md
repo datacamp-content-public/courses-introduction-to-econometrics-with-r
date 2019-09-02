@@ -20,7 +20,7 @@ Suppose you are the lottery fairy in a weekly lottery, where $6$ out of $49$ *un
 
 `@hint`
 + You may use the function <tt>sample()</tt> to draw random numbers, see <tt>?sample</tt>.
-  + The set of elements to be sampled from here is $\\{1,...,49\\}$.
++ The set of elements to be sampled from here is $\\{1,...,49\\}$.
 
 `@pre_exercise_code`
 ```{r}
@@ -133,14 +133,14 @@ The PDF <tt>f()</tt> from the previous exercise is available in your working env
 
 `@instructions`
 + Define a suitable function <tt>ex()</tt> which integrates to the expected value of $X$.
-  + Compute the expected value of $X$. Store the result in <tt>expected_value</tt>.
-  + Define a suitable function <tt>ex2()</tt> which integrates to the expected value of $X^2$.
-  + Compute the variance of $X$. Store the result in <tt>variance</tt>.
++ Compute the expected value of $X$. Store the result in <tt>expected_value</tt>.
++ Define a suitable function <tt>ex2()</tt> which integrates to the expected value of $X^2$.
++ Compute the variance of $X$. Store the result in <tt>variance</tt>.
 
 `@hint`
 + The expected value of $X$ is defined as $E(X)=\\int_0^\\infty xf\_X(x)\\mathrm{d}x$.
-  + The value of an integral computed by <tt>integrate()</tt> can be obtained via <tt>$value</tt>.
-  + The variance of $X$ is defined as $Var(X)=E(X^2)-E(X)^2$, where $E(X^2)=\\int_0^\\infty x^2f\_X(x)\\mathrm{d}x$.
++ The value of an integral computed by <tt>integrate()</tt> can be obtained via <tt>$value</tt>.
++ The variance of $X$ is defined as $Var(X)=E(X^2)-E(X)^2$, where $E(X^2)=\\int_0^\\infty x^2f\_X(x)\\mathrm{d}x$.
 
 `@pre_exercise_code`
 ```{r}
@@ -210,4 +210,95 @@ ex() %>% check_function("integrate", index = 2) %>% {
 }
 ex() %>% check_object("variance") %>% check_equal()
 success_msg("Good job!")
+```
+
+---
+
+## Standard Normal Distribution I
+
+```yaml
+type: NormalExercise
+key: f0622e59c7
+xp: 100
+```
+
+Let $Z\\sim\\mathcal{N}(0, 1)$.
+
+`@instructions`
++ Compute $\\phi(3)$, that is, the value of the standard normal density at $c=3$.
+
+`@hint`
++ Values of $\\phi(\\cdot)$ can be computed using <tt>dnorm()</tt>. Note that by default <tt>dnorm()</tt> uses <tt>mean = 0</tt> and <tt>sd = 1</tt>, so there is no need to set the corresponding arguments when you wish to obtain density values of the standard normal distribution.
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# compute the value of the standard normal density at c=3
+
+
+```
+
+`@solution`
+```{r}
+# compute the value of the standard normal density at c=3
+dnorm(3)
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_function("dnorm") %>% check_result() %>% check_equal()
+success_msg("Well done!")
+```
+
+---
+
+## Standard Normal Distribution II
+
+```yaml
+type: NormalExercise
+key: eb56223310
+xp: 100
+```
+
+Let $Z\\sim\\mathcal{N}(0, 1)$.
+
+`@instructions`
++ Compute $P(|Z|\\leq 1.64)$ by using the function <tt>pnorm()</tt>.
+
+`@hint`
++ $P(|Z|\\leq z) = P(-z \\leq Z \\leq z)$.
++ Probabilities of the form $P(a \\leq Z \\leq b)$ can be computed as $P(Z\\leq b)-P(Z\\leq a)=F\_Z(b)-F\_Z(a)$ with $F\_Z(\\cdot)$ the cumulative distribution function (CDF) of $Z$. Alternatively, you may exploit the symmetry of the standard normal distribution.
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# compute the probability
+
+
+```
+
+`@solution`
+```{r}
+# compute the probability
+pnorm(1.64) - pnorm(-1.64)
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_or(
+  check_function(., "pnorm"),
+  check_code(., "dnorm", fixed = T)
+)
+ex() %>% check_output_expr("1 - 2*pnorm(-1.64)")
+success_msg("Good Job!")
 ```
