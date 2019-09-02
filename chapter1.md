@@ -444,3 +444,158 @@ ex() %>% check_function("curve") %>% {
 ex() %>% check_code("dchisq", fixed = T)
 success_msg("Great work!")
 ```
+
+---
+
+## Chi-squared Distribution II
+
+```yaml
+type: NormalExercise
+key: 8e4a8cc2ef
+xp: 100
+```
+
+Let $X\_1$ and $X\_2$ be two independent normally distributed random variables with $\\mu=0$ and $\\sigma^2=15$.
+
+`@instructions`
++ Compute $P(X\_1^2+X\_2^2>10)$.
+
+`@hint`
++ Note that $X\_1$ and $X\_2$ are not $\\mathcal{N}(0,1)$ but $\\mathcal{N}(0,15)$ distributed. Hence you have to scale appropriately. Afterwards you can use <tt>pchisq()</tt> to compute the probability.
++ The argument <tt>lower.tail</tt> may be helpful.
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# compute the probability
+
+
+```
+
+`@solution`
+```{r}
+# compute the probability
+pchisq(10/15, df = 2, lower.tail = F)
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_or(
+  check_function(., "pchisq"),
+  check_code(., "dchisq", fixed = T)
+)
+ex() %>% check_output_expr("1 - pchisq(10/15, df = 2)")
+success_msg("Great work!")
+```
+
+---
+
+## Student t Distribution I
+
+```yaml
+type: NormalExercise
+key: e0e653696b
+xp: 100
+```
+
+Let $X\\sim t\_{10000}$ and $Z\\sim\\mathcal{N}(0,1)$.
+
+`@instructions`
++ Compute the $95\\%$ quantile of both distributions. What do you notice?
+
+`@hint`
++ You may use <tt>qt()</tt> and <tt>qnorm()</tt> to compute quantiles of the given distributions.
++ For the $t$ distribution you have to specify the degrees of freedom <tt>df</tt>.
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# compute the 95% quantile of a t distribution with 10000 degrees of freedom
+
+
+# compute the 95% quantile of a standard normal distribution
+
+
+```
+
+`@solution`
+```{r}
+# compute the 95% quantile of a t distribution with 10000 degrees of freedom
+qt(0.95, df = 10000)
+
+# compute the 95% quantile of a standard normal distribution
+qnorm(0.95)
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_function("qt") %>% check_result() %>% check_equal()
+ex() %>% check_function("qnorm") %>% check_result() %>% check_equal()
+success_msg("Correct! A t-distributed RV converges to a standard normal as the degrees of freedom get large.")
+```
+
+---
+
+## Student t Distribution II
+
+```yaml
+type: NormalExercise
+key: 141baf52d5
+xp: 100
+```
+
+Let $X\\sim t\_1$. 
+
+Once the session has initialized you will see the plot of the corresponding probability density function (PDF).
+
+`@instructions`
++ Generate $1000$ random numbers from this distribution and assign them to the variable <tt>x</tt>.
++ Compute the sample mean of <tt>x</tt>. Can you explain the result?
+
+`@hint`
++ You can use <tt>rt()</tt> to draw random numbers from a t distribution.
++ Note that the t distribution is fully determined through the degree(s) of freedom. Specify them via the argument <tt>df</tt>.
++ To compute the sample mean of a vector you can use the function <tt>mean()</tt>.
+
+`@pre_exercise_code`
+```{r}
+custom_seed(1)
+```
+
+`@sample_code`
+```{r}
+# generate 1000 random numbers from the given distribution. Assign them to the variable x.
+
+
+# compute the sample mean of x.
+
+
+```
+
+`@solution`
+```{r}
+# generate 1000 random numbers from the given distribution. Assign them to the variable x.
+x <- rt(1000, df = 1)
+
+# compute the sample mean of x.
+mean(x)
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_object("x") %>% check_equal()
+# allow for rcauchy()
+ex() %>% check_function("mean") %>% check_result() %>% check_equal()
+success_msg("Well done! The expectation is not defined for a t distributed RV with one degree of freedom: although a t distribution with M = 1 is, as every other t distribution, symmetric around zero it actually has no expectation. This explains the value of the sample mean not being close to zero.")
+```
