@@ -113,7 +113,6 @@ ex() %>% check_function("integrate") %>% {
   check_arg(., "lower") %>% check_equal()
   check_arg(., "upper") %>% check_equal()
 }
-ex() %>% check_function('integrate') %>% check_result() %>% check_equal()
 success_msg("Great work!")
 ```
 
@@ -598,4 +597,99 @@ ex() %>% check_object("x") %>% check_equal()
 # allow for rcauchy()
 ex() %>% check_function("mean") %>% check_result() %>% check_equal()
 success_msg("Well done! The expectation is not defined for a t distributed RV with one degree of freedom: although a t distribution with M = 1 is, as every other t distribution, symmetric around zero it actually has no expectation. This explains the value of the sample mean not being close to zero.")
+```
+
+---
+
+## F Distribution I
+
+```yaml
+type: NormalExercise
+key: e4bfce6847
+xp: 100
+```
+
+Let $Y\\sim F(10, 4)$.
+
+`@instructions`
++ Plot the quantile function of the given distribution using the function <tt>curve()</tt>.
+
+`@hint`
++ <tt>curve()</tt> expects the function with their respective parameters (here: degrees of freedom <tt>df1</tt> and <tt>df2</tt>) as an argument.
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# plot the quantile function of the given distribution
+
+
+```
+
+`@solution`
+```{r}
+# plot the quantile function of the given distribution
+curve(qf(x, df1 = 10, df2 = 4))
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_function("curve") %>% check_arg(., "expr") # does not work, more robust SCT needed
+ex() %>% check_code("qf", fixed = T)
+success_msg("Well done!")
+```
+
+---
+
+## F Distribution II
+
+```yaml
+type: NormalExercise
+key: bfe9c95c43
+xp: 100
+```
+
+Let $Y\\sim F(4,5)$.
+
+`@instructions`
++ Compute $P(1<Y<10)$ by integration of the PDF.
+
+`@hint`
++ Besides providing the function to be integrated, you have to specify lower and upper bounds of integration.
++ The additional parameters of the distribution (here <tt>df1</tt> and <tt>df2</tt>) also have to be passed *inside* the call of <tt>integrate()</tt>.
++ The value of the integral can be obtained via <tt>$value</tt>.
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+# compute the probability by integration
+
+
+```
+
+`@solution`
+```{r}
+# compute the probability by integration
+integrate(df, lower = 1, upper = 10, df1 = 4, df2 = 5)$value
+
+```
+
+`@sct`
+```{r}
+ex() %>% check_function("integrate") %>% {
+  check_arg(., "f") %>% check_equal(eval = FALSE)
+  check_arg(., "lower") %>% check_equal()
+  check_arg(., "upper") %>% check_equal()
+  check_arg(., "df1") %>% check_equal()
+  check_arg(., "df2") %>% check_equal()
+}
+success_msg("Great work!")
 ```
