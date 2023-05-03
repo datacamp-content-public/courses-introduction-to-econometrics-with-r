@@ -1,6 +1,6 @@
 ---
-title: 'Probability Theory'
-description: 'Chapter description goes here.'
+title: Probability Theory
+description: Chapter description goes here.
 ---
 
 ## Sampling
@@ -10,7 +10,8 @@ type: NormalExercise
 key: 2bafef99a3
 lang: r
 xp: 100
-skills: 1
+skills:
+  - 1
 ```
 
 Suppose you are the lottery fairy in a weekly lottery, where $6$ out of $49$ *unique* numbers are drawn.
